@@ -1,7 +1,7 @@
 package intcraft.canceldetect;
 
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,34 +12,19 @@ import intcraft.canceldetect.CancellationDetector.CancelListener;
 
 public class PvPCancelDetector extends JavaPlugin implements Listener
 {
-    private CancellationDetector<EntityDamageByEntityEvent> detector = new CancellationDetector<EntityDamageByEntityEvent>(EntityDamageByEntityEvent.class);
+    private CancellationDetector<InventoryDragEvent> detector = new CancellationDetector<InventoryDragEvent>(InventoryDragEvent.class);
 
     @Override
     public void onEnable()
     {
         getServer().getPluginManager().registerEvents(this, this);
 
-        detector.addListener(new CancelListener<EntityDamageByEntityEvent>()
+        detector.addListener(new CancelListener<InventoryDragEvent>()
         {
             @Override
-            public void onCancelled(Plugin plugin, EntityDamageByEntityEvent event)
+            public void onCancelled(Plugin plugin, InventoryDragEvent event)
             {
-
-                String damagee = event.getEntity().toString();
-                String damager = event.getDamager().toString();
-
-                if (event.getEntity() instanceof Player)
-                    damagee = ((Player)event.getEntity()).getName();
-                if (event.getDamager() instanceof Player)
-                    damager = ((Player)event.getDamager()).getName();
-
-                // log it in console
-                System.out.println("[CANCELDETECT] Player " + damagee + " is immune to " + damager + "s " + event.getCause() + ", cancelled by " + plugin);
-
-                // message OPs ingame
-                for (Player p : Bukkit.getOnlinePlayers())
-                    if(p.isOp())
-                        p.sendMessage(ChatColor.DARK_RED + "[CANCELDETECT] " + ChatColor.RED + damagee + ChatColor.WHITE + " is immune to " + ChatColor.RED + damager + ChatColor.WHITE + "s " + event.getCause() + " cancelled by " + ChatColor.LIGHT_PURPLE + plugin);
+                System.out.println("cancelled by " + plugin);
             }
         });
     }
@@ -53,7 +38,7 @@ public class PvPCancelDetector extends JavaPlugin implements Listener
 
     // For testing
     /*@EventHandler
-    public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e)
+    public void onInventoryDragEvent(InventoryDragEvent e)
     {
         e.setCancelled(true);
     }
