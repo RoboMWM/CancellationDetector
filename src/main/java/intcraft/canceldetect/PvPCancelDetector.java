@@ -1,7 +1,7 @@
 package intcraft.canceldetect;
 
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByBlockEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,17 +12,17 @@ import intcraft.canceldetect.CancellationDetector.CancelListener;
 
 public class PvPCancelDetector extends JavaPlugin implements Listener
 {
-    private CancellationDetector<EntityDamageByBlockEvent> detector = new CancellationDetector<EntityDamageByBlockEvent>(EntityDamageByBlockEvent.class);
+    private CancellationDetector<EntityDamageEvent> detector = new CancellationDetector<EntityDamageEvent>(EntityDamageEvent.class);
 
     @Override
     public void onEnable()
     {
         getServer().getPluginManager().registerEvents(this, this);
 
-        detector.addListener(new CancelListener<EntityDamageByBlockEvent>()
+        detector.addListener(new CancelListener<EntityDamageEvent>()
         {
             @Override
-            public void onCancelled(Plugin plugin, EntityDamageByBlockEvent event)
+            public void onCancelled(Plugin plugin, EntityDamageEvent event)
             {
                 System.out.println("cancelled by " + plugin);
             }
