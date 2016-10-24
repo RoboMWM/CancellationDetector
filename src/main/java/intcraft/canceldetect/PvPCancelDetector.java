@@ -13,7 +13,7 @@ import intcraft.canceldetect.CancellationDetector.CancelListener;
 
 public class PvPCancelDetector extends JavaPlugin implements Listener
 {
-    private CancellationDetector<PlayerPickupItemEvent> detector = new CancellationDetector<PlayerInteractEvent>(PlayerPickupItemEvent.class);
+    private CancellationDetector<PlayerPickupItemEvent> detector = new CancellationDetector<PlayerPickupItemEvent>(PlayerPickupItemEvent.class);
     //private CancellationDetector<ItemSpawnEvent> ItemSpawndetector = new CancellationDetector<ItemSpawnEvent>(ItemSpawnEvent.class);
 
     @Override
