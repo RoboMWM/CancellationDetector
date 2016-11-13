@@ -2,8 +2,9 @@ package intcraft.canceldetect;
 
 import org.bukkit.event.Listener;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
@@ -13,7 +14,7 @@ import intcraft.canceldetect.CancellationDetector.CancelListener;
 
 public class PvPCancelDetector extends JavaPlugin implements Listener
 {
-    private CancellationDetector<AsyncPlayerChatEvent> detector = new CancellationDetector<AsyncPlayerChatEvent>(AsyncPlayerChatEvent.class);
+    private CancellationDetector<PlayerCommandPreprocessEvent> detector = new CancellationDetector<PlayerCommandPreprocessEvent>(PlayerCommandPreprocessEvent.class);
     //private CancellationDetector<ItemSpawnEvent> ItemSpawndetector = new CancellationDetector<ItemSpawnEvent>(ItemSpawnEvent.class);
 
     @Override
@@ -21,10 +22,10 @@ public class PvPCancelDetector extends JavaPlugin implements Listener
     {
         getServer().getPluginManager().registerEvents(this, this);
 
-        detector.addListener(new CancelListener<AsyncPlayerChatEvent>()
+        detector.addListener(new CancelListener<PlayerCommandPreprocessEvent>()
         {
             @Override
-            public void onCancelled(Plugin plugin, AsyncPlayerChatEvent event)
+            public void onCancelled(Plugin plugin, PlayerCommandPreprocessEvent event)
             {
                 System.out.println("Chat cancelled by " + plugin);
             }
