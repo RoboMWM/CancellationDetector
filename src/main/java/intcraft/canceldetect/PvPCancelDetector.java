@@ -3,7 +3,7 @@ package intcraft.canceldetect;
 import org.bukkit.event.Listener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
@@ -13,7 +13,7 @@ import intcraft.canceldetect.CancellationDetector.CancelListener;
 
 public class PvPCancelDetector extends JavaPlugin implements Listener
 {
-    private CancellationDetector<PlayerPickupItemEvent> detector = new CancellationDetector<PlayerPickupItemEvent>(PlayerPickupItemEvent.class);
+    private CancellationDetector<AsyncPlayerChatEvent> detector = new CancellationDetector<AsyncPlayerChatEvent>(AsyncPlayerChatEvent.class);
     //private CancellationDetector<ItemSpawnEvent> ItemSpawndetector = new CancellationDetector<ItemSpawnEvent>(ItemSpawnEvent.class);
 
     @Override
@@ -21,12 +21,12 @@ public class PvPCancelDetector extends JavaPlugin implements Listener
     {
         getServer().getPluginManager().registerEvents(this, this);
 
-        detector.addListener(new CancelListener<PlayerPickupItemEvent>()
+        detector.addListener(new CancelListener<AsyncPlayerChatEvent>()
         {
             @Override
-            public void onCancelled(Plugin plugin, PlayerPickupItemEvent event)
+            public void onCancelled(Plugin plugin, AsyncPlayerChatEvent event)
             {
-                System.out.println("ItemPickup cancelled by " + plugin);
+                System.out.println("Chat cancelled by " + plugin);
             }
         });
 
